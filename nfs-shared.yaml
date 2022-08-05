@@ -1,0 +1,724 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: rabbitmq-pv
+  labels:
+    app: rabbitmq
+    type: local
+spec:
+  storageClassName: local-storage 
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/rabbitmq"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rabbitmq-pvc
+  labels:
+    app: rabbitmq
+spec:
+  storageClassName: local-storage       
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: rabbitmq-pv
+
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: postgres-pv
+  labels:
+    app: postgres
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 100Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/data"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres-pvc-claim
+  labels:
+    app: postgres
+spec:
+  storageClassName: local-storage
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 80Gi
+  volumeName: postgres-pv
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: flyway-conf-pv
+  labels:
+    app: flyway
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/flyway/conf"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: flyway-conf-pvc-claim
+  labels:
+    app: flyway
+spec:
+  storageClassName: local-storage
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: flyway-conf-pv
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: flyway-sql-pv
+  labels:
+    app: flyway
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/flyway/sql"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: flyway-sql-pvc-claim
+  labels:
+    app: flyway
+spec:
+  storageClassName: local-storage
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
+  volumeName: flyway-sql-pv
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: configserver-pv-logs
+  labels:
+    app: configserver
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 15Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server/logs"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: configserver-pvc-logs-claim
+  labels:
+    app: configserver
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 15Gi
+  volumeName: configserver-pv-logs
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: configserver-pv-server
+  labels:
+    app: configserver
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 20Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: configserver-pvc-server-claim
+  labels:
+    app: configserver
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: configserver-pv-server
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: events-pv-logs
+  labels:
+    app: events
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 50Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server/logs"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: events-logs-pv-claim
+  labels:
+    app: events
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 15Gi
+  volumeName: events-pv-logs
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: events-server-pv-nfs
+  labels:
+    app: events
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 20Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: events-server-pv-nfs-claim
+  labels:
+    app: events
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: events-server-pv-nfs
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: workflow-pv-logs-nfs
+  labels:
+    app: workflow
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 15Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server/logs"
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: workflow-pvc-logs-claim
+  labels:
+    app: workflow
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 15Gi
+  volumeName: workflow-pv-logs-nfs
+
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: workflow-server-pv-nfs
+  labels:
+    app: workflow
+    type: local
+spec:
+  storageClassName: local-storage 
+  capacity:
+    storage: 50Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: workflow-server-pv-nfs-claim
+  labels:
+    app: workflow
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: workflow-server-pv-nfs
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: imageprocessor-pv-logs
+  labels:
+    app: imageprocessor
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 20Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server/logs"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: imageprocessor-logs-pvc-claim
+  labels:
+    app: imageprocessor
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: imageprocessor-pv-logs
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: imageprocessor-server-pv
+  labels:
+    app: imageprocessor
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 50Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: imageprocessor-server-pvc-claim
+  labels:
+    app: imageprocessor
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: imageprocessor-server-pv
+
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: imageprocessor-archive-pv
+  labels:
+    app: imageprocessor
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 100Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Output"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: imageprocessor-archive-pvc-claim
+  labels:
+    app: imageprocessor
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 80Gi
+  volumeName: imageprocessor-archive-pv
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: coreapp-pv-logs-nfs
+  labels:
+    app: coreapp
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 50Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server/logs"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: coreapp-pv-logs-nfs-claim
+  labels:
+    app: coreapp
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  volumeName: coreapp-pv-logs-nfs
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: server-pv-nfs
+  labels:
+    app: coreapp
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain  
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: server-pv-nfs-claim
+  labels:
+    app: coreapp
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: server-pv-nfs
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: archive-pv-nfs
+  labels:
+    app: coreapp
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 150Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Output"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: archive-pv-nfs-claim
+  labels:
+    app: coreapp
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  volumeName: archive-pv-nfs
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: infinispanserver-pv-nfs
+  labels:
+    app: infinispanserver
+    type: local
+spec:
+  storageClassName: nfs-storage
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server/resources/cache"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: infinispanserver-pv-nfs-claim
+  labels:
+    app: infinispanserver
+spec:
+  storageClassName: nfs-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
+  volumeName: infinispanserver-pv-nfs
+
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: discovery-service-pv-logs-nfs
+  labels:
+    app: discovery-service
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 50Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server/logs"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: discovery-service-pv-logs-nfs-claim
+  labels:
+    app: discovery-service
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: discovery-service-pv-logs-nfs
+
+
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: elasticsearch-pv-data
+  labels:
+    app: elasticsearch
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/elk"
+
+      #hostPath:
+      #path: "/opt/logs"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: elastic-search-nfs
+  labels:
+    app: elasticsearch
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+  volumeName: elasticsearch-pv-data
+
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: discovery-service-server-nfs
+  labels:
+    app: discovery-service
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.9.204.193
+    path: "/mnt/nfs_share/Server"
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: discovery-service-server-nfs-claim
+  labels:
+    app: discovery-service
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: discovery-service-server-nfs
+
